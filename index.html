@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <title>Food</title>  
+  
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">  
+  <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">  
+  <link rel="stylesheet" href="lib/es/css/app.css"/>
+
+  <script src="lib/onsen/js/angular/angular.js"></script>    
+  <script src="lib/onsen/js/onsenui.js"></script>    
+  <script src="lib/es/app.js"></script>  
+
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+  	
+  <script type="text/javascript" charset="utf-8">
+
+	    // Wait for device API libraries to load
+	    document.addEventListener("deviceready", function() {
+	    	try {
+		        navigator.notification.alert(
+		            'You are the winner!',  // message
+		            alertDismissed,         // callback
+		            'Game Over',            // title
+		            'Done'                  // buttonName
+		        );
+			} catch (e) {
+				alert(e);
+			}
+	    }, true);
+	
+	    // device APIs are available
+	    function onDeviceReady() {
+	        alert("hi");
+	    }
+	
+	    // alert dialog dismissed
+        function alertDismissed() {
+            // do something
+        }
+	
+	    // Show a custom alertDismissed
+	    function showAlert() {
+	    	try {
+		        navigator.notification.alert(
+		            'You are the winner!',  // message
+		            alertDismissed,         // callback
+		            'Game Over',            // title
+		            'Done'                  // buttonName
+		        );
+			} catch (e) {
+				alert(e);
+			}
+	    }
+
+   </script>
+  
+</head>
+<body ng-controller="AppController">
+ 
+	 	<!-- sliding menu -->
+		<ons-sliding-menu
+	                 main-page="mainPage.html"
+	                 menu-page="menu.html"       
+	                 side="left"
+	                 max-slide-distance="250px"
+	                 var="menu">
+	</ons-sliding-menu>
+	
+	<!-- menu -->	
+	<ons-template id="menu.html">
+	  <ons-list>
+	    <ons-list-item modifier="chevron" onclick="menu.setMainPage('mainPage.html', {closeMenu: true})">
+	      Home =))
+	    </ons-list-item>
+	    <ons-list-item modifier="chevron" onclick="menu.setMainPage('newItems.html', {closeMenu: true})">
+	      New Items
+	    </ons-list-item>
+	    <ons-list-item modifier="chevron" onclick="menu.setMainPage('categories.html', {closeMenu: true})">
+	      Categories
+	    </ons-list-item>
+	   	<ons-list-item modifier="chevron" onclick="menu.setMainPage('searchItem.html', {closeMenu: true})">
+	      Search Item
+	    </ons-list-item>
+	  </ons-list>
+	</ons-template>
+		
+	<!-- main page-->
+	<ons-template id="mainPage.html">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="left">
+	        <ons-toolbar-button ng-click="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+	      </div>
+	      <div class="center">Home</div>
+	    </ons-toolbar>
+	
+	    <p style="text-align: center; color: #999; ">Home {{name}}
+	     	<br>
+	     <ons-button ng-click="myAlert('message', 'title')" class="">Alert</ons-button>
+	     <ons-button onclick="showAlert()" class="">show Alert</ons-button>
+	      <ons-button ng-click="camera()" class="">Camera</ons-button>
+	    </p>
+	   
+	    
+	  </ons-page>
+	</ons-template>
+	
+	<!-- new items page-->	
+	<ons-template id="newItems.html">
+	 <ons-navigator title="Navigator" var="itemsNav">
+	  	<ons-page>
+	  		<!-- pull -->	
+		  	<ons-pull-hook ng-action="getNewItems($done)" var="loader">
+			  <span ng-switch="loader.getCurrentState()">
+			    <span ng-switch-when="initial"><ons-icon size="35px" icon="ion-arrow-down-a"></ons-icon> Pull down to refresh</span>
+			    <span ng-switch-when="preaction"><ons-icon size="35px" icon="ion-arrow-up-a"></ons-icon> Release to refresh</span>
+			    <span ng-switch-when="action"><ons-icon size="35px" spin="true" icon="ion-load-d"></ons-icon> Loading data...</span>
+			  </span>
+			</ons-pull-hook>
+	  		<!-- toolbar-->	
+		    <ons-toolbar>
+		      <div class="left">
+		        <ons-toolbar-button onclick="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+		      </div>
+		      <div class="center"> New Items</div>
+		    </ons-toolbar>
+	      <ons-list>
+	        <ons-list-item ng-repeat="item in newItems" ng-click="getNewItem(item.id)" class="" modifier="chevron">{{item.name}}</ons-list-item>
+	      </ons-list>
+	  	</ons-page>
+	  </navigator>	
+	</ons-template>
+	
+	<!-- search item page-->	
+	<ons-template id="searchItem.html">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="left">
+	        <ons-toolbar-button onclick="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+	      </div>
+	      <div class="center"> Search Item</div>
+	 		  <div class="right"><input type="search" class="search-input" placeholder="Keyword"></input></div>
+	    </ons-toolbar>
+	
+	    <p style="text-align: center; color: #999; padding-top: 100px;">Search Item</p>
+	  </ons-page>
+	</ons-template>
+	
+	<!-- view categories page-->	
+	<ons-template id="categories.html">
+	 <ons-navigator title="Navigator" var="categoriesNav">
+	  	<ons-page>
+		    <ons-toolbar>
+		      <div class="left">
+		        <ons-toolbar-button onclick="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+		      </div>
+		      <div class="center">Categories</div>
+		    </ons-toolbar>
+		    <ons-list>
+		        <ons-list-item ng-repeat="category in categories" ng-click="getItems(category.id)" class="list-item-container"
+		        	 modifier="chevron">  
+		        	  <!--  Name:{{category.name}} - Category ID: {{category.id}} - Description:  {{category.description}}  -->
+		 		 <ons-row>
+		            <ons-col width="95px">
+		              <img src="" class="cThumbnail">
+		            </ons-col>
+		            <ons-col>
+		              <div class="cName">
+		                {{category.name}}
+		              </div>
+		              <div class="cRate">
+		                <i></i> Serial No. {{category.id}}
+		              </div>
+		              <div class="cDesc">
+		                {{category.description}}
+		              </div>
+		            </ons-col>
+		            <ons-col width="40px"></ons-col>
+		          </ons-row> 
+		       </ons-list-item>
+		     </ons-list>
+	  	</ons-page>
+	  </navigator>	
+	</ons-template>
+	
+	<!-- items page-->	
+	<ons-template id="items.html">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="left">
+	        <ons-toolbar-button onclick="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+	        <ons-back-button>Back</ons-back-button>
+	      </div>
+	      <div class="center">{{category.name}}</div>
+	    </ons-toolbar>
+	
+	   	 <ons-list>
+	        <ons-list-item ng-repeat="item in items" ng-click="getItem(item.id)" class="" modifier="chevron">
+		        <ons-row>
+	              <ons-col width="40px">
+	              <img>
+	              </ons-col>
+	              <ons-col >
+	                {{item.name}}
+	              </ons-col>
+	              <ons-col class="test">
+	                ID: {{item.id}}
+	              </ons-col>
+	            </ons-row>
+	        </ons-list-item>
+	     </ons-list>
+	  </ons-page>
+	</ons-template>
+	
+	<ons-template id="item.html">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="left">
+	        <ons-toolbar-button ng-click="menu.toggleMenu()"><ons-icon icon="ion-navicon" style="font-size: 32px; width: 1em;"></ons-icon></ons-toolbar-button>
+	        <ons-back-button>Back</ons-back-button>
+	      </div>
+	      <div class="center">{{item.name}}</div>
+	    </ons-toolbar>
+	      
+	    <div class="update-form">
+	      	<div class="lines">
+	      		Price: {{item.price}} <br>
+	      		Id: {{item.id}}
+	      	</div>
+			
+			<div class="left">
+				Edit
+			</div>
+	      	 
+	     	<br>
+	      	<input class="text-input"  ng-model="item.name"><br>
+	     	<input class="text-input"  ng-model="item.price"><br>
+	     	<ons-button ng-click="editItem(item)" class="update-button">Update</ons-button>
+	    </div>
+	  </ons-page>
+	</ons-template>
+	
+	<!-- 
+	<ons-navigator title="Navigator" var="myNavigator">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="center">Simple Navigation</div>
+	    </ons-toolbar>
+	    <div style="text-align: center">
+	      <br>
+	      <ons-button modifier="light" onclick="myNavigator.pushPage('page1.html', { animation : 'slide' } )">
+	        Push Page
+	      </ons-button>
+	    </div>
+	  </ons-page>
+	</ons-navigator>
+	
+	<ons-template id="page1.html">
+	  <ons-page>
+	    <ons-toolbar>
+	      <div class="left"><ons-back-button>Back</ons-back-button></div>
+	      <div class="center">Page 2</div>
+	    </ons-toolbar>
+	
+	    <div style="text-align: center">
+	      <br />
+	      <ons-button modifier="light" onclick="myNavigator.popPage()">
+	        Pop Page
+	      </ons-button>
+	    </div>
+	  </ons-page>
+	</ons-template> 
+	  -->
+  
+
+ </body>
+ 
+ </html>
