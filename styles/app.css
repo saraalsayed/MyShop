@@ -1,0 +1,12 @@
+.left {
+	text-align: left;
+}
+
+
+.col.grid{
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: hidden;
+  padding-top: 100px;
+  color: #999;
+}

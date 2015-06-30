@@ -1,0 +1,54 @@
+.left {
+	text-align: left;	
+}
+
+.list-item-container {
+  line-height: 1;
+  padding: 15px 0px 15px 15px;
+}
+
+.cThumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  font-weight: bold;
+  -webkit-border-radius: 4px;
+}
+
+.cName {
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.cRate {
+  font-size: 14px;
+  opacity: 0.4;
+  margin-bottom: 6px;
+}
+
+.cDesc {
+  line-height: 1.2;
+  font-size: 13px;
+}
+
+.update-form {
+  text-align: center;
+  width: 80%;
+  margin: 60px auto 0;
+}
+
+input, .lines {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.update-button {
+  width: 100%;
+  margin: 0 auto;
+}
